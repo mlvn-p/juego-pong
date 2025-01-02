@@ -6,6 +6,10 @@ const diametro = 50; //diámetro de la pelota
 let velocidadX = 5;
 let velocidadY = 5;
 
+let imagenPelota;
+let imagenRaqueta;
+let imagenComputadora;
+
 //función setup del p5.js
 function setup() {
     createCanvas(800, 400);
@@ -73,8 +77,9 @@ class Pelota {
     }
 
     draw() {
-        fill(255);
-        circle(this.x, this.y, this.diametro);
+        //dibuja la pelota como una imagen en lugar de un círculo
+        image(imagenPelota, this.x - this.diametro / 2, this.y - this.diametro / 2, this.diametro, this.diametro);
+        //circle(this.x, this.y, this.diametro);
     }
 }
 
@@ -141,6 +146,13 @@ function colision(cx, cy, diametro, rx, ry, ancho, alto) {
     return true;
 
 }
+
+function preload() {
+    imagenPelota = loadImage('pelota.png');
+    imagenRaqueta = loadImage('raqueta1.png');
+    imagenComputadora = loadImage('raqueta2.png');
+}
+
 function setup() {
     createCanvas(800, 400);
     pelota = new Pelota(400, 200, 50, 5, 5);
