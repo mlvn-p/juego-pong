@@ -10,6 +10,7 @@ let imagenPelota;
 let imagenRaqueta;
 let imagenComputadora;
 let imagenFondo;
+let sonidoRaqueta;
 
 //función setup del p5.js
 function setup() {
@@ -171,6 +172,7 @@ function preload() {
     imagenRaqueta = loadImage('raqueta1.png');
     imagenComputadora = loadImage('raqueta2.png');
     imagenFondo = loadImage('fondo.png');
+    sonidoRaqueta = loadSound('bounce.wav');
 }
 
 function setup() {
