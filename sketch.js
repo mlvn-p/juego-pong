@@ -9,6 +9,7 @@ let velocidadY = 5;
 let imagenPelota;
 let imagenRaqueta;
 let imagenComputadora;
+let imagenFondo;
 
 //función setup del p5.js
 function setup() {
@@ -50,6 +51,8 @@ class Pelota {
     update() {
         this.x += this.velocidadX;
         this.y += this.velocidadY;
+        //aumenta la rotación de la pelota con la velocidad en el eje x y la velocidad en el eje y
+        this.rotation += this.velocidadX + this.velocidadY;
 
         if (this.x > width - this.diametro / 2 || this.x < this.diametro / 2) {
             this.reset();
@@ -74,11 +77,20 @@ class Pelota {
         this.y = 200;
         this.velocidadX = velocidadX * (Math.random() < 0.5 ? -1 : 1);
         this.velocidadY = velocidadY * (Math.random() < 0.5 ? -1 : 1);
+        //rotación actual de la pelota
+        this.rotation = 0;
     }
 
     draw() {
-        //dibuja la pelota como una imagen en lugar de un círculo
-        image(imagenPelota, this.x - this.diametro / 2, this.y - this.diametro / 2, this.diametro, this.diametro);
+        //dibuja la pelota como una imagen en lugar de un círculo   
+        //rota la pelota antes de dibujarla
+        push();
+        translate(this.x, this.y);
+        rotate(this.rotation);
+        image(imagenPelota, -this.diametro / 2, -this.diametro / 2, this.diametro, this.diametro);
+        pop();
+
+        //image(imagenPelota, this.x - this.diametro / 2, this.y - this.diametro / 2, this.diametro, this.diametro);
         //circle(this.x, this.y, this.diametro);
     }
 }
@@ -158,6 +170,7 @@ function preload() {
     imagenPelota = loadImage('pelota.png');
     imagenRaqueta = loadImage('raqueta1.png');
     imagenComputadora = loadImage('raqueta2.png');
+    imagenFondo = loadImage('fondo.png');
 }
 
 function setup() {
@@ -168,7 +181,9 @@ function setup() {
 }
 
 function draw() {
-    background(0);
+    //background(0);
+    //dibujar el fondo del juego
+    image(imagenFondo, 0, 0, width, height);
     pelota.update();
     pelota.draw();
     raqueta.update();
