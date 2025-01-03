@@ -115,7 +115,14 @@ class Raqueta {
         }
 
     draw() {
-        rect(this.x, this.y, this.ancho, this.alto);
+        //si es la raqueta del jugador, dibuja la raqueta con la imagen de la raqueta del jugador
+        if (this.x < width / 2) {
+            image(imagenRaqueta, this.x, this.y, this.ancho, this.alto);
+        } else {
+            //si es la raqueta de la computadora, dibuja la raqueta con la imagen de la raqueta de la computadora
+            image(imagenComputadora, this.x, this.y, this.ancho, this.alto);
+        }
+        //rect(this.x, this.y, this.ancho, this.alto);
     }
 }
 
