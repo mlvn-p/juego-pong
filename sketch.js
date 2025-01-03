@@ -11,6 +11,10 @@ let imagenRaqueta;
 let imagenComputadora;
 let imagenFondo;
 let sonidoRaqueta;
+let sonidoGol;
+
+let puntosJugador = 0;
+let puntosComputadora = 0;
 
 //función setup del p5.js
 function setup() {
@@ -56,6 +60,14 @@ class Pelota {
         this.rotation += this.velocidadX + this.velocidadY;
 
         if (this.x > width - this.diametro / 2 || this.x < this.diametro / 2) {
+            sonidoGol.play();
+            if (this.x > width / 2) {
+                puntosJugador++;
+            } else {
+                puntosComputadora++;
+            }
+            
+            narrarPuntos();
             this.reset();
         }
 
@@ -66,6 +78,7 @@ class Pelota {
         //si colisiona con la raqueta del jugador o la computadora, invierte el sentido y aumenta la velocidad en 10%
         if (colision(this.x, this.y, this.diametro, raqueta.x, raqueta.y, raqueta.ancho, raqueta.alto) ||
             colision(this.x, this.y, this.diametro, computadora.x, computadora.y, computadora.ancho, computadora.alto)) {
+            sonidoRaqueta.play(); 
             this.velocidadX *= 1.1;
             this.velocidadY *= 1.1;
             this.velocidadX *= -1;
@@ -173,6 +186,7 @@ function preload() {
     imagenComputadora = loadImage('raqueta2.png');
     imagenFondo = loadImage('fondo.png');
     sonidoRaqueta = loadSound('bounce.wav');
+    sonidoGol = loadSound('Jingle_Win_Synth_02.wav');
 }
 
 function setup() {
@@ -180,6 +194,16 @@ function setup() {
     pelota = new Pelota(400, 200, 50, 5, 5);
     raqueta = new Raqueta(20, 150, 20, 100, 5);
     computadora = new Raqueta(760, 150, 20, 100, 5);
+}
+
+function narrarPuntos() {
+    //Narra los puntos utilizando la API speechapi
+    //Narra utilizando español de Argentina
+    let puntos = puntosJugador + " a " + puntosComputadora;
+    let mensaje = new SpeechSynthesisUtterance(puntos);
+    mensaje.lang = 'es-AR';
+    speechSynthesis.speak(mensaje);
+    
 }
 
 function draw() {
